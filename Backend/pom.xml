@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cfs.gerador</groupId>
-	<artifactId>contrato</artifactId>
+	<artifactId>contratos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>contrato</name>
 	<description>project for Spring Boot</description>
@@ -47,7 +47,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
