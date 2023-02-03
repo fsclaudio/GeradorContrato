@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -40,7 +41,13 @@ public class ContratoService {
     public ContratoDTO insert(ContratoDTO dto) {
         Contrato contrato = new Contrato();
         BeanUtils.copyProperties(dto,contrato,"id");
-
+        contrato.setDataAbertura(new Date());
+        Date dt = new Date();
+        contrato.setDataTermino(dt);
+        contrato.setValor((float) (dto.getFaturamentoContratada() * 0.6));
+        contrato.setValorParcela((float) (dto.getFaturamentoContratada() * 0.6)/dto.getNumeroParcelas());
+        contrato.setValorParcelaLoja(((float) (dto.getFaturamentoContratada() * 0.6)/dto.getNumeroParcelas())/dto.getNumeroLojas());
+        contrato.setDiaVencimentoParcela(dt.getDay());
         contrato= repository.save(contrato);
 
         return new ContratoDTO(contrato);
