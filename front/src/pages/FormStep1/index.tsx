@@ -43,6 +43,13 @@ const FormStep1 = () => {
         })
     }
 
+    const handleCnpjContratada = (e: ChangeEvent<HTMLInputElement>)=>{
+        dispatch({
+            type: FormActions.setCnpjContratada,
+            payload: e.target.value
+        })
+    }
+
     const handleLogradouroContratada = (e: ChangeEvent<HTMLInputElement>)=>{
         dispatch({
             type: FormActions.setLogradouroContratada,
@@ -112,6 +119,16 @@ const FormStep1 = () => {
                  value={state.nomeFantasiaContratada}
                  onChange ={handleNomeFantasiaContratada}
                 />
+             </label>
+             <hr/>
+             <label>
+                CNPJ
+                <input
+                 type="text"
+                 value={state.CnpjContratada}
+                 onChange ={handleCnpjContratada}
+                />
+                
              </label>
              <hr/>
              <label>
