@@ -1,8 +1,12 @@
 package com.cfs.gerador.contrato.services;
 
 import com.cfs.gerador.contrato.dtos.ContratoDTO;
+import com.cfs.gerador.contrato.entities.Contratada;
+import com.cfs.gerador.contrato.entities.Contratante;
 import com.cfs.gerador.contrato.entities.Contrato;
 import com.cfs.gerador.contrato.exceptions.ResourceNotFoundException;
+import com.cfs.gerador.contrato.repositories.ContratadaRepository;
+import com.cfs.gerador.contrato.repositories.ContratanteRepository;
 import com.cfs.gerador.contrato.repositories.ContratoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,12 @@ import java.util.Optional;
 public class ContratoService {
     @Autowired
     private ContratoRepository repository;
+
+    @Autowired
+    private ContratanteRepository contratanteRepository;
+
+    @Autowired
+    private ContratadaRepository contratadaRepository;
 
     @Transactional(readOnly = true)
     public Page<ContratoDTO> findAllPaged(PageRequest pageRequest){
@@ -43,10 +53,14 @@ public class ContratoService {
         BeanUtils.copyProperties(dto,contrato,"id");
         contrato.setDataAbertura(new Date());
         Date dt = new Date();
+        Contratada contratada = contratadaRepository.findById(dto.getContratada().getId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Registro não existe" + dto.getContratada().getId()));
+
+        Contratante contratante = contratanteRepository.findById(dto.getContratante().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Registro não existe" + dto.getContratante().getId()));
+        contrato.setContratada(contratada);
+        contrato.setContratante(contratante);
         contrato.setDataTermino(dt);
-        contrato.setValor((float) (dto.getFaturamentoContratada() * 0.6));
-        contrato.setValorParcela((float) (dto.getFaturamentoContratada() * 0.6)/dto.getNumeroParcelas());
-        contrato.setValorParcelaLoja(((float) (dto.getFaturamentoContratada() * 0.6)/dto.getNumeroParcelas())/dto.getNumeroLojas());
         contrato.setDiaVencimentoParcela(dt.getDay());
         contrato= repository.save(contrato);
 
