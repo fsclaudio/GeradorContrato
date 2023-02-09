@@ -4,7 +4,9 @@ import * as A from './styles';
 import {useForm, FormActions} from '../../Contexts/FormContext'
 import {Theme} from '../../components/Theme'
 import { ChangeEvent, useEffect } from 'react';
+import axios from 'axios';
 
+const url = 'http://localhost:8080/contratadas';
 
 
 const FormStep1 = () => {
@@ -93,6 +95,15 @@ const FormStep1 = () => {
         })
     }
 
+    const handleContratada = async(e: { preventDefault: () => void; }) =>{
+        e.preventDefault();
+        try {
+            const resp = await axios.post(url,state);
+            console.log(resp.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return(
        
         <Theme>

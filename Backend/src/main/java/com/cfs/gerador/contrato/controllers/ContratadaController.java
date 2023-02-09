@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @Controller
+@CrossOrigin("*")
 @RequestMapping("/contratadas")
 public class ContratadaController {
 

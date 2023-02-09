@@ -44,7 +44,7 @@ p {
       color: #FFF;
       font-size: 14px;
       font-weigth: bold;
-      padding: 20px 40px;
+      padding: 20px 40px 20px 20px;
       border: 0;
       border-radius: 30px;
       cursor: pointer;
